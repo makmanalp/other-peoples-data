@@ -338,7 +338,82 @@ Out[90]:
                     </code></pre>
                 </section>
 
-                <section><h2>Digging in further</h2></section>
+
+
+
+                <section><h2>Playing with data</h2></section>
+                <section>
+                    <h3>Selecting columns</h3>
+                    <pre><code data-trim>
+In [50]: df.State
+Out[50]:
+0     AK
+1     AK
+2     AK
+...
+
+In [51]: df["Item Name"]
+Out[51]:
+0     RIFLE,5.56 MILLIMETER
+1     RIFLE,5.56 MILLIMETER
+2     RIFLE,5.56 MILLIMETER
+3     RIFLE,5.56 MILLIMETER
+4     RIFLE,5.56 MILLIMETER
+...
+
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Selecting multiple columns</h3>
+                    <pre><code data-trim>
+In [54]: df[["State", "County"]]
+Out[54]:
+      State                     County
+0        AK  ANCHORAGE
+1        AK  ANCHORAGE
+2        AK  ANCHORAGE
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Queries</h3>
+                    <pre><code data-trim>
+In [58]: df["Acquisition Cost"] > 100000
+Out[58]:
+0     False
+1     False
+2     False
+3     False
+4     False
+5     False
+...
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Queries</h3>
+                    <pre><code data-trim>
+In [59]: df[df["Acquisition Cost"] > 100000]
+Out[59]:
+      State                     County               NSN  \
+146      AK  ANCHORAGE                  2355-DS-COM-BTV2
+515      AL  BALDWIN                    2320-01-047-8754
+663      AL  BLOUNT                     2320-01-047-8754
+674      AL  BLOUNT                     2320-01-230-0304
+693      AL  BLOUNT                     2355-01-555-0908
+...
+In [60]: df[df["Acquisition Cost"] > 100000].count()
+Out[60]:
+State               646
+County              646
+NSN                 645
+Item Name           641
+...
+                    </code></pre>
+                </section>
+
+
                 <section>
                     <p>What were the highest cost items?</p>
                     <pre><code data-trim>
@@ -444,6 +519,7 @@ Out[46]:
                     <h3>Regexes and other string functions</h3>
                     <pre><code data-trim>
 >>> df.column[df.column.str.contains("(\d{4}-\d{2}-\d{2})")]
+>>> df["Item Name"].str.lower()
                     </code></pre>
                 </section>
 
@@ -466,6 +542,11 @@ Out[46]:
                     </code></pre>
                 </section>
 
+                <section><h2>Other stuff</h2></section>
+                <section><p>PDFs suck!</p></section>
+                <section data-background-image="img/tabula.jpg"></section>
+
+
                 <section><h2>Scaling up</h2></section>
                 <section>Don't let notebooks get in the way of reusable code</section>
                 <section>
@@ -479,17 +560,14 @@ Out[46]:
                 <section>
                     <p>Be conscious about what you load into memory</p>
                     <pre><code data-trim>
-                    columns=[]
-                    iterate=True
+                    pd.read_csv(..., usecols=["blah"])
+                    pd.read_csv(..., iterator=True, chunksize=100000)
                     </code></pre>
                 </section>
 
                 <section>
                     <p>Push things down into the pandas / numpy layer</p>
                 </section>
-
-                <section><p>PDFs suck!</p></section>
-                <section data-background-image="img/tabula.jpg"></section>
 
                 <section><h2>Takeaways</h2></section>
                 <section><h3>Use the proper types for things</h3></section>
