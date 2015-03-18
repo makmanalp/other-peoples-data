@@ -197,10 +197,6 @@ dtypes: float64(1), int64(1), object(6)
                 <section>5 != 5.0</section>
 
                 <section>
-                    Merging on different types makes data disappear
-                </section>
-
-                <section>
                     Adding nulls make int columns floats!
                     <pre><code data-trim>
 In [32]: x = pd.read_csv(StringIO("a,b\n5,6.0\n,"))
@@ -222,6 +218,11 @@ memory usage: 48.0 bytes
                     </code></pre>
 
                 </section>
+
+                <section>
+                    Merging on different types makes data disappear
+                </section>
+
 
                 <section>
                     <h3>Converting types</h3>
@@ -612,7 +613,8 @@ Out[86]:
 
                 <section>
                     <pre><code data-trim>
-In [88]: pd.merge(ages, weights, left_on="cats", right_on="cats", how="outer")
+In [88]: pd.merge(ages, weights, left_on="cats", right_on="cats",
+                  how="outer")
 Out[88]:
    age    cats  weight
 0    1   simon       1
@@ -622,6 +624,13 @@ Out[88]:
                 </section>
 
                 <section><p>fuzzywuzzy and jellyfish</p></section>
+                <section>
+                    <pre><code data-trim>
+>>> from fuzzywuzzy import fuzz
+>>> fuzz.ratio("this is a test", "this is a test!")
+    96
+                    </code></pre>
+                </section>
 
 
                 <section><h2>Graphs!</h2></section>
@@ -636,17 +645,8 @@ Out[88]:
                     </ul>
                 </section>
 
-
-                <section><h2>Other stuff</h2></section>
                 <section><p>PDFs suck!</p></section>
                 <section data-background-image="img/tabula.jpg"></section>
-                <section>
-                    <pre><code data-trim>
->>> from fuzzywuzzy import fuzz
->>> fuzz.ratio("this is a test", "this is a test!")
-    96
-                    </code></pre>
-                </section>
 
 
                 <section><h2>Scaling up</h2></section>
@@ -662,8 +662,8 @@ Out[88]:
                 <section>
                     <p>Be conscious about what you load into memory</p>
                     <pre><code data-trim>
-                    pd.read_csv(..., usecols=["blah"])
-                    pd.read_csv(..., iterator=True, chunksize=100000)
+pd.read_csv(..., usecols=["blah"])
+pd.read_csv(..., iterator=True, chunksize=100000)
                     </code></pre>
                 </section>
 
