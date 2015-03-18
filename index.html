@@ -83,6 +83,7 @@ pd.read_sql        pd.read_stata      pd.read_excel      pd.read_hdf
 pd.read_msgpack    pd.read_sql_query  pd.read_table
                     </code></pre>
                 </section>
+                <section><h3>Encoding Issues</h3></section>
                 <section>
                     <pre><code data-trim>
 In [5]: pd.read_stata("state_names.dta")
@@ -130,6 +131,149 @@ Hëävy Mëtäl
 'Heavy Metal'
                     </code></pre>
                 </section>
+
+                <section>
+                    <h2>Types are important!</h2>
+                </section>
+
+                <section>
+                    Merging on different types makes data disappear
+                </section>
+
+                <section>
+                    adding empty makes int float
+                    pd.read_csv(StringIO("a,b,c\n05,06,07.0\n,,"))
+                </section>
+
+                <section>
+                    dtype=
+                </section>
+
+                <section>
+                    <h3>Kinds of nothing</h3>
+                    <ul>
+                        <li>No data available</li>
+                        <li>Nully values: "", 0</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>The Semantics of Types</h2>
+                </section>
+
+                <section>
+                    <h3>Identifiers</h3>
+                    <p> <small>(Not numbers!)</small></p>
+                    <ul>
+                        <li>617-555-1234</li>
+                        <li>721-07-1426</li>
+                        <li>01605</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Categoricals</h3>
+                    <p> <small>(Not strings!)</small></p>
+                    <ul>
+                        <li>red, green, blue, orange</li>
+                        <li>A, B, AB, 0</li>
+                        <li>noun, verb, adjective, adverb</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Ordinals</h3>
+                    <p> <small>(Also not strings!)</small></p>
+                    <ul>
+                        <li>low, medium, high</li>
+                        <li>★, ★★, ★★★, ★★★★</li>
+                        <li>high school, undergrad, graduate</li>
+                    </ul>
+                </section>
+
+                <section><h2>Dealing with missing data</h2></section>
+                <section>
+                    <h3>Converting custom N/A values</h3>
+                    <pre><code data-trim>
+pf.read_csv(..., na_values=["N/A", "Unknown"])
+# or
+df.replace("N/A", None)
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+Out[65]:
+    a  b   c   d
+0   1  2 NaN NaN
+1 NaN  3 NaN NaN
+2   4  5 NaN NaN
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [68]: df.dropna(axis=1)
+Out[68]:
+   b
+   0  2
+   1  3
+   2  5
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [69]: df.dropna(axis=1, how="all")
+Out[69]:
+    a  b
+    0   1  2
+    1 NaN  3
+    2   4  5
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [86]: df.fillna(method="bfill")
+Out[86]:
+   a  b   c   d
+   0  1  2 NaN NaN
+   1  4  3 NaN NaN
+   2  4  5 NaN NaN
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [85]: df.fillna(method="ffill")
+Out[85]:
+   a  b   c   d
+   0  1  2 NaN NaN
+   1  1  3 NaN NaN
+   2  4  5 NaN NaN
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [90]: df.interpolate()
+Out[90]:
+     a  b   c   d
+     0  1.0  2 NaN NaN
+     1  2.5  3 NaN NaN
+     2  4.0  5 NaN NaN
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+                    </code></pre>
+                </section>
+
+                <section>
+                    fillna / dropna / interpolation / replace(‘NA’) or na_values=[]
+                </section>
+
 
                 <section style="text-align: left;">
                     <h1>THE END</h1>
