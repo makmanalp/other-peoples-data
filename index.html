@@ -392,7 +392,6 @@ SE            360
                     </code></pre>
                 </section>
 
-
                 <section>
                     <pre><code data-trim>
 In [17]: df = df.replace({"UI":["EA", "EACH", "PR" ...]},
@@ -424,8 +423,30 @@ Length: 54, dtype: int64
                     <pre><code data-trim>
 dontcare = df.UI.value_counts()[20:]
 df = df[~df.UI.isin(dontcare.index)]
+
                     </code></pre>
                 </section>
+
+                <section>
+                    <pre><code data-trim>
+In [46]: df.sort("Quantity", ascending=False)\
+   ....: [["Item Name", "Quantity", "UI"]]
+Out[46]:
+                                       Item Name  Quantity       UI
+52530                            WIRE,ELECTRICAL     91000     Foot
+36221                      SCREW,CAP,SOCKET HEAD     43822     Each
+52399        STRAP,TIEDOWN,ELECTRICAL COMPONENTS      6000     Each
+52536                                CABLE  COAX      6000     Foot
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Regexes and other string functions</h3>
+                    <pre><code data-trim>
+>>> df.column[df.column.str.contains("(\d{4}-\d{2}-\d{2})")]
+                    </code></pre>
+                </section>
+
 
                 <section><h2>Getting a 10000 foot view</h2></section>
                 <section>
