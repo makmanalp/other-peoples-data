@@ -73,6 +73,11 @@ import pandas as pd
                     </code></pre>
                 </section>
 
+                <section>
+                        <p>Military surplus gear given to law enforcement</p>
+                        <p><a href="https://github.com/TheUpshot/Military-Surplus-Gear">https://github.com/TheUpshot/Military-Surplus-Gear</a></p>
+                </section>
+
                 <section><h2>Reading Data In</h2></section>
                 <section>
                     <pre><code data-trim>
@@ -133,16 +138,85 @@ Hëävy Mëtäl
                 </section>
 
                 <section>
+                    <pre><code data-trim>
+In [89]: df = pd.read_excel("1033-program-foia-may-2014.xlsx")
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [24]: df.columns
+Out[24]: Index([u'State', u'County', u'NSN', u'Item Name', u'Quantity',
+u'UI', u'Acquisition Cost', u'Ship Date'], dtype='object')
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+In [6]: df.describe()
+Out[6]:
+           Quantity  Acquisition Cost
+count  73028.000000      73028.000000
+mean      15.006792       7967.575490
+std      384.623930     197293.243356
+min        1.000000          0.000000
+25%        1.000000         58.710000
+50%        1.000000        200.000000
+75%        5.000000        499.000000
+max    91000.000000   18000000.000000
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [90]: df.info()
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 73028 entries, 0 to 73027
+Data columns (total 8 columns):
+State               73028 non-null object
+County              73028 non-null object
+NSN                 72983 non-null object
+Item Name           71732 non-null object
+Quantity            73028 non-null int64
+UI                  73028 non-null object
+Acquisition Cost    73028 non-null float64
+Ship Date           73028 non-null object
+dtypes: float64(1), int64(1), object(6)
+                    </code></pre>
+                </section>
+
+
+                <section>
                     <h2>Types are important!</h2>
                 </section>
+
+                <section>5 != '5'</section>
+                <section>5 != 5.0</section>
 
                 <section>
                     Merging on different types makes data disappear
                 </section>
 
                 <section>
-                    adding empty makes int float
-                    pd.read_csv(StringIO("a,b,c\n05,06,07.0\n,,"))
+                    adding nulls make int columns floats!
+                    <pre><code data-trim>
+In [32]: x = pd.read_csv(StringIO("a,b\n5,6.0\n,"))
+
+In [33]: x
+Out[33]:
+    a   b
+0   5   6
+1 NaN NaN
+
+In [34]: x.info()
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 2 entries, 0 to 1
+Data columns (total 2 columns):
+a    1 non-null float64
+b    1 non-null float64
+dtypes: float64(2)
+memory usage: 48.0 bytes
+                    </code></pre>
+
                 </section>
 
                 <section>
@@ -152,7 +226,7 @@ Hëävy Mëtäl
                 <section>
                     <h3>Kinds of nothing</h3>
                     <ul>
-                        <li>No data available</li>
+                        <li>No data available: None</li>
                         <li>Nully values: "", 0</li>
                     </ul>
                 </section>
@@ -215,9 +289,9 @@ Out[65]:
 In [68]: df.dropna(axis=1)
 Out[68]:
    b
-   0  2
-   1  3
-   2  5
+0  2
+1  3
+2  5
                     </code></pre>
                 </section>
 
@@ -226,9 +300,9 @@ Out[68]:
 In [69]: df.dropna(axis=1, how="all")
 Out[69]:
     a  b
-    0   1  2
-    1 NaN  3
-    2   4  5
+0   1  2
+1 NaN  3
+2   4  5
                     </code></pre>
                 </section>
 
@@ -245,17 +319,6 @@ Out[86]:
 
                 <section>
                     <pre><code data-trim>
-In [85]: df.fillna(method="ffill")
-Out[85]:
-   a  b   c   d
-   0  1  2 NaN NaN
-   1  1  3 NaN NaN
-   2  4  5 NaN NaN
-                    </code></pre>
-                </section>
-
-                <section>
-                    <pre><code data-trim>
 In [90]: df.interpolate()
 Out[90]:
      a  b   c   d
@@ -265,14 +328,96 @@ Out[90]:
                     </code></pre>
                 </section>
 
+                <section><h2>Getting a 10000 foot fiew</h2></section>
+                <section>
+                        <h3>Reveal issues early!</h3>
+                </section>
+                <section>
+                        <h3>Understand what's possible</h3>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [15]: df.sort("Quantity", ascending=False)[["Item Name", "Quantity", "UI"]]
+Out[15]:
+                                       Item Name  Quantity       UI
+52530                            WIRE,ELECTRICAL     91000     Foot
+36221                      SCREW,CAP,SOCKET HEAD     43822     Each
+52399        STRAP,TIEDOWN,ELECTRICAL COMPONENTS      6000     Each
+52536                                CABLE  COAX      6000       FT
+39189                         RUBBER SHEET,SOLID      6000     Each
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <pre><code data-trim>
+In [16]: df.UI.value_counts()
+Out[16]:
+Each        51581
+EA          13370
+Pair         1381
+PR           1285
+Unknown       982
+Kit           732
+Set           463
+KT            441
+SE            360
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <pre><code data-trim>
+In [17]: df = df.replace({"UI":["EA", "EACH", "PR" ...]},
+                          {"UI":["Each", "Each", "Pair" ...]})
+In [18]: df = df.replace({"UI":"Unknown"}, {"UI":np.NaN})
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [22]: df.UI.value_counts()[20:]
+Out[22]:
+Assortment     10
+GL              9
+Can             8
+OT              7
+BD              7
+...
+JR              1
+E4              1
+Skein           1
+UU              1
+SP              1
+Length: 54, dtype: int64
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+dontcare = df.UI.value_counts()[20:]
+df = df[~df.UI.isin(dontcare.index)]
+                    </code></pre>
+                </section>
+
                 <section>
                     <pre><code data-trim>
                     </code></pre>
                 </section>
 
                 <section>
-                    fillna / dropna / interpolation / replace(‘NA’) or na_values=[]
+                    <pre><code data-trim>
+                    </code></pre>
                 </section>
+
+                <section>
+                    <pre><code data-trim>
+                    </code></pre>
+                </section>
+
+
+
 
 
                 <section style="text-align: left;">
