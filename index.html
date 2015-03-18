@@ -585,10 +585,47 @@ Name: one, dtype: int64
                         <li>Try with how=inner and how=outer</li>
                     </ul>
                 </section>
+                <section>
+                    <pre><code data-trim>
+In [83]: ages
+Out[83]:
+   age    cats
+0    1   simon
+1    2  phoebe
+2    3  norman
+In [84]: weights
+Out[84]:
+     cats  weight
+0   simon       1
+1  norman       2
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+In [86]: pd.merge(ages, weights, left_on="cats", right_on="cats")
+Out[86]:
+   age    cats  weight
+0    1   simon       1
+1    3  norman       2
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+In [88]: pd.merge(ages, weights, left_on="cats", right_on="cats", how="outer")
+Out[88]:
+   age    cats  weight
+0    1   simon       1
+1    2  phoebe     NaN
+2    3  norman       2
+                    </code></pre>
+                </section>
+
                 <section><p>fuzzywuzzy and jellyfish</p></section>
 
 
                 <section><h2>Graphs!</h2></section>
+                <section data-background-image="img/anscombe.png" data-background-size="700px"></section>
                 <section>
                     <ul>
                         <li>ggplot</li>
