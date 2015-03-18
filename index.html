@@ -65,31 +65,72 @@
                 <section>
                     <img data-src="img/pila2.png" alt="bad UI">
                 </section>
-
+                <section data-background-image="img/house_sigh.gif"></section>
                 <section>
-                    <img data-src="img/house_sigh.gif" alt="bad UI">
+                    <img data-src="img/take_this.png" alt="take this!" width=600>
                     <pre><code>
 import pandas as pd
                     </code></pre>
                 </section>
 
+                <section><h2>Reading Data In</h2></section>
                 <section>
-                    <pre><code data-trim contenteditable>
-$ file hs4_atlas.tsv
-hs4_atlas.tsv: UTF-8 Unicode English text
+                    <pre><code data-trim>
+In [1]: pd.read_&lt;tab&gt;
+pd.read_clipboard  pd.read_fwf        pd.read_html       pd.read_pickle
+pd.read_sql_table  pd.read_csv        pd.read_gbq        pd.read_json
+pd.read_sql        pd.read_stata      pd.read_excel      pd.read_hdf
+pd.read_msgpack    pd.read_sql_query  pd.read_table
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+In [5]: pd.read_stata("state_names.dta")
+Out[5]:
+     r                           r_name
+0    1                   Aguascalientes
+...
+14  15                          MÃ©xico
+15  16             MichoacÃ¡n de Ocampo
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim>
+In [6]: pd.read_stata("state_names.dta", encoding="utf-8")
+Out[6]:
+     r                           r_name
+0    1                   Aguascalientes
+...
+14  15                           México
+15  16              Michoacán de Ocampo
                     </code></pre>
                 </section>
 
                 <section>
-                    <h2>Pretty Code</h2>
-                    <pre><code data-trim contenteditable>
-In [11]: pd.read_
-pd.read_clipboard  pd.read_fwf        pd.read_html       pd.read_pickle     pd.read_sql_table
-pd.read_csv        pd.read_gbq        pd.read_json       pd.read_sql        pd.read_stata
-pd.read_excel      pd.read_hdf        pd.read_msgpack    pd.read_sql_query  pd.read_table
+                    <pre><code data-trim>
+>>> import chardet
+>>> chardet.detect(rawdata)
+{'encoding': 'EUC-JP', 'confidence': 0.99}
                     </code></pre>
-                    <p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
                 </section>
+
+                <section>
+                    <pre><code data-trim>
+$ file boston_python_is_awesome.tsv
+boston_python_is_awesome.tsv: UTF-8 Unicode English text
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+>>> from unidecode import unidecode
+>>> print u'H\xeb\xe4vy M\xebt\xe4l'
+Hëävy Mëtäl
+>>> unidecode(u'H\xeb\xe4vy M\xebt\xe4l')
+'Heavy Metal'
+                    </code></pre>
+                </section>
+
 
                 <section>
                     <h2>Hello There</h2>
