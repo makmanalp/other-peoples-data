@@ -138,6 +138,10 @@ Hëävy Mëtäl
                 </section>
 
                 <section>
+                    <h2> Taking a peek</h2>
+                </section>
+
+                <section>
                     <pre><code data-trim>
 In [89]: df = pd.read_excel("1033-program-foia-may-2014.xlsx")
                     </code></pre>
@@ -197,7 +201,7 @@ dtypes: float64(1), int64(1), object(6)
                 </section>
 
                 <section>
-                    adding nulls make int columns floats!
+                    Adding nulls make int columns floats!
                     <pre><code data-trim>
 In [32]: x = pd.read_csv(StringIO("a,b\n5,6.0\n,"))
 
@@ -220,7 +224,12 @@ memory usage: 48.0 bytes
                 </section>
 
                 <section>
-                    dtype=
+                    <h3>Converting types</h3>
+                    <pre><code data-trim>
+pd.read_csv(..., dtype={"column_1": int, "column_2": object})
+# or
+df.column = df.column.astype(int)
+                    </code></pre>
                 </section>
 
                 <section>
@@ -275,6 +284,7 @@ df.replace("N/A", None)
                     </code></pre>
                 </section>
                 <section>
+                    <h3>Dropping nulls</h3>
                     <pre><code data-trim>
 Out[65]:
     a  b   c   d
@@ -328,17 +338,33 @@ Out[90]:
                     </code></pre>
                 </section>
 
-                <section><h2>Getting a 10000 foot fiew</h2></section>
+                <section><h2>Digging in further</h2></section>
                 <section>
-                        <h3>Reveal issues early!</h3>
-                </section>
-                <section>
-                        <h3>Understand what's possible</h3>
-                </section>
-
-                <section>
+                    <p>What were the highest cost items?</p>
                     <pre><code data-trim>
-In [15]: df.sort("Quantity", ascending=False)[["Item Name", "Quantity", "UI"]]
+In [38]: df.sort("Acquisition Cost", ascending=False)\
+[["Item Name", "Acquisition Cost"]]
+Out[38]:
+                                               Item Name  Acquisition Cost
+65754                              AIRCRAFT, ROTARY WING          18000000
+65753                              AIRCRAFT, ROTARY WING          18000000
+65760                              AIRCRAFT, ROTARY WING          18000000
+65759                              AIRCRAFT, ROTARY WING          18000000
+65758                              AIRCRAFT, ROTARY WING          18000000
+65757                              AIRCRAFT, ROTARY WING          18000000
+65756                              AIRCRAFT, ROTARY WING          18000000
+65755                              AIRCRAFT, ROTARY WING          18000000
+48074                              AIRCRAFT, ROTARY WING           6500000
+19524                           AIRPLANE,CARGO-TRANSPORT           5340000
+65678                               AIRCRAFT, FIXED WING           4317067
+2150                          RADAR SURVEILLANCE CENTRAL           1526703
+                    </code></pre>
+                </section>
+                <section>
+                    <p>What were the largest quantities of items?</p>
+                    <pre><code data-trim>
+In [15]: df.sort("Quantity", ascending=False)\
+[["Item Name", "Quantity", "UI"]]
 Out[15]:
                                        Item Name  Quantity       UI
 52530                            WIRE,ELECTRICAL     91000     Foot
@@ -399,6 +425,14 @@ Length: 54, dtype: int64
 dontcare = df.UI.value_counts()[20:]
 df = df[~df.UI.isin(dontcare.index)]
                     </code></pre>
+                </section>
+
+                <section><h2>Getting a 10000 foot view</h2></section>
+                <section>
+                        <h3>Reveal issues early!</h3>
+                </section>
+                <section>
+                        <h3>Understand what's possible</h3>
                 </section>
 
                 <section>
