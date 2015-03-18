@@ -269,7 +269,7 @@ memory usage: 48.0 bytes
                 <section>
                     <h3>Converting custom N/A values</h3>
                     <pre><code data-trim>
-pf.read_csv(..., na_values=["N/A", "Unknown"])
+pd.read_csv(..., na_values=["N/A", "Unknown"])
 # or
 df.replace("N/A", None)
                     </code></pre>
@@ -411,14 +411,37 @@ df = df[~df.UI.isin(dontcare.index)]
                     </code></pre>
                 </section>
 
+                <section><h2>Scaling up</h2></section>
+                <section>Don't let notebooks get in the way of reusable code</section>
                 <section>
+                    <p>Sometimes repeatability matters</p>
+                    <ul>
+                        <li>Build tools: Make, tup</li>
+                        <li>OKFN Bubbles, ETLs, Hadoop, Storm, etc</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Be conscious about what you load into memory</p>
                     <pre><code data-trim>
+                    columns=[]
+                    iterate=True
                     </code></pre>
                 </section>
 
+                <section>
+                    <p>Push things down into the pandas / numpy layer</p>
+                </section>
 
+                <section><p>PDFs suck!</p></section>
+                <section data-background-image="img/tabula.jpg"></section>
 
-
+                <section><h2>Takeaways</h2></section>
+                <section><h3>Use the proper types for things</h3></section>
+                <section><h3>Data has a tendency to be used in unanticipated ways</h3></section>
+                <section><h3>Documentation matters</h3></section>
+                <section><h3>Fix data before you need it fixed!</h3></section>
+                <section><h3>Data cleaning is a necessary <em>evil</em></h3></section>
 
                 <section style="text-align: left;">
                     <h1>THE END</h1>
