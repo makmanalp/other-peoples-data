@@ -409,9 +409,11 @@ Out[54]:
                 </section>
 
                 <section>
-                    <h3>Queries</h3>
+                    <h3>Indexing</h3>
                     <pre><code data-trim>
-In [58]: df["Acquisition Cost"] > 100000
+In [57]: expensive_stuff = df["Acquisition Cost"] > 100000
+Out[57]:
+In [58]: expensive_stuff
 Out[58]:
 0     False
 1     False
@@ -426,7 +428,7 @@ Out[58]:
                 <section>
                     <h3>Queries</h3>
                     <pre><code data-trim>
-In [59]: df[df["Acquisition Cost"] > 100000]
+In [59]: df[expensive_stuff]
 Out[59]:
       State                     County               NSN  \
 146      AK  ANCHORAGE                  2355-DS-COM-BTV2
@@ -435,7 +437,13 @@ Out[59]:
 674      AL  BLOUNT                     2320-01-230-0304
 693      AL  BLOUNT                     2355-01-555-0908
 ...
-In [60]: df[df["Acquisition Cost"] > 100000].count()
+                    </code></pre>
+                </section>
+
+
+                <section>
+                    <pre><code data-trim>
+In [60]: df[expensive_stuff].count()
 Out[60]:
 State               646
 County              646
@@ -473,12 +481,12 @@ Out[38]:
 In [15]: df.sort("Quantity", ascending=False)\
 [["Item Name", "Quantity", "UI"]]
 Out[15]:
-                                       Item Name  Quantity       UI
-52530                            WIRE,ELECTRICAL     91000     Foot
-36221                      SCREW,CAP,SOCKET HEAD     43822     Each
-52399        STRAP,TIEDOWN,ELECTRICAL COMPONENTS      6000     Each
-52536                                CABLE  COAX      6000       FT
-39189                         RUBBER SHEET,SOLID      6000     Each
+                                   Item Name  Quantity       UI
+52530                        WIRE,ELECTRICAL     91000     Foot
+36221                  SCREW,CAP,SOCKET HEAD     43822     Each
+52399    STRAP,TIEDOWN,ELECTRICAL COMPONENTS      6000     Each
+52536                            CABLE  COAX      6000       FT
+39189                     RUBBER SHEET,SOLID      6000     Each
                     </code></pre>
                 </section>
 
