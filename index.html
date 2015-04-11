@@ -594,7 +594,27 @@ date
                 </section>
 
                 <section>
-                    <h3>Transforming with functions</h3>
+                    <h3>Grouping</h3>
+                    <pre><code data-trim>
+In [12]: df.groupby("State")[['Acquisition Cost']].sum()
+Out[12]:
+       Acquisition Cost
+State
+AK         7.065548e+05
+AL         1.173220e+08
+AR         2.180638e+07
+AZ         3.717375e+07
+CA         9.219959e+07
+CO         1.770129e+07
+CT         7.920540e+06
+DC         2.174148e+07
+DE         1.248318e+07
+FL         2.528014e+08
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Transforming data with functions</h3>
                     <pre><code data-trim>
 In [128]: df4
 Out[128]: 
